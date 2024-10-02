@@ -5,9 +5,9 @@ import GoogleProvider from "next-auth/providers/google";
 export const authOptions = {
   providers: [
     CredentialsProvider({
-      name: "Email",
+      name: "Credentials",
       credentials: {
-        username: {
+        email: {
           label: "Username",
           type: "text",
           placeholder: "username",
@@ -19,7 +19,24 @@ export const authOptions = {
         },
       },
       async authorize(credentials: any) {
-        return { id: "sdg" };
+        const res = await prisma.user.findFirst({
+          where: {
+            email: credentials.username,
+          },
+          select: {
+            id:true,
+            password: true,
+            name: true,
+          },
+        });
+        if(res){
+          console.log("found")
+        }
+        return {
+          id:credentials.id,
+          name: credentials.name,
+          email: credentials.username,
+        };
       },
     }),
     GoogleProvider({
@@ -27,8 +44,15 @@ export const authOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
     }),
   ],
-  adapter:PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: "jwt",
+  },
+  jwt: {
+    secret: process.env.NEXTAUTH_SECRET,
+    maxAge: 5 * 60 * 1000,
+  },
   pages: {
     signIn: "/signin",
   },
