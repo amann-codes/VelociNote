@@ -10,11 +10,14 @@ export default function Appbar() {
           VelociNote
         </p>
         <div className="flex flex-row justify-end gap-x-4">
-          <button className="w-max h-max border-2 rounded-md px-4 py-2 font-mono text-lg font-bold text-white">
+          <button
+            onClick={() => router.push("/signup")}
+            className="w-max h-max border-2 rounded-md px-4 py-2 font-mono text-lg font-bold text-white"
+          >
             Signup
           </button>
           <button
-            onClick={() =>router.push('/signin')}
+            onClick={() => router.push("/signin")}
             className="w-max h-max border-2 rounded-md px-4 py-2 font-mono text-lg font-bold text-white"
           >
             Login
