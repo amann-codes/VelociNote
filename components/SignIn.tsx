@@ -4,12 +4,25 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 export default function SignIn() {
   const router = useRouter();
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const handlesubmit = async () => {
+    try {
+      const res = await signIn("Credentials", {
+        email: email,
+        password: password,
+      });
+      console.log(res);
+      router.push("/");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
-    <div className="flex items-center justify-center min-h-screen relative bg-lime-100">
+    <div className="flex items-center justify-center min-h-screen relative bg-[#F0F4F8]">
       <div className="w-max h-max">
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col justify-center items-center border-2 border-[#CCCCCC] p-7 rounded-xl">
           <p className="text-center text-black font-bold text-3xl mt-3 font-mono">
             Welcome Back
           </p>
@@ -20,7 +33,7 @@ export default function SignIn() {
             onClick={async () => {
               await signIn("google");
             }}
-            className="w-full flex flex-row justify-center items-center border-2 border-lime-600 px-6 py-2 rounded-md text-xl font-mono font-semibold"
+            className="w-full flex flex-row justify-center items-center border-2 border-[#CCCCCC] shadow-md bg-white px-6 py-2 rounded-md text-xl font-mono font-semibold mt-5"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -51,20 +64,26 @@ export default function SignIn() {
             </svg>
             Sign with Google
           </button>
-
-          <form className="flex flex-col w-[95%] mt-8">
-            <label className="mt-3 mb-2 font-mono text-xl font-semibold">
+          <div className="flex items-center justify-center my-5">
+            <hr className="w-48 h-[2px] bg-gray-300 border-0 rounded" />
+            <span className="px-4 text-lg font-medium text-gray-900">
+              Or
+            </span>
+            <hr className="w-48 h-[2px] bg-gray-300 border-0 rounded" />
+          </div>
+          <form className="flex flex-col w-full gap-y-3">
+            <label className="font-mono text-xl font-semibold">
               Email
             </label>
             <input
               onChange={(e) => {
-                setUsername(e.target.value);
+                setEmail(e.target.value);
               }}
               type="text"
               placeholder="user12@sdf.com"
-              className="focuse:outline-1 focus:outline-lime-600 rounded-md bg-lime-100 px-4 py-3 text-black placeholder:text-lime-600 placeholder:font-mono border-2 border-lime-500"
+              className="focuse:outline-1 focus:outline-[#CCCCCC] text-lg font-mono rounded-md bg-[#F9F9F9] px-4 py-3 text-black placeholder:text-[#333333] placeholder:font-mono border-2 border-[#CCCCCC]"
             ></input>
-            <label className="mt-3 mb-2 font-mono text-xl font-semibold">
+            <label className="font-mono text-xl font-semibold">
               Password
             </label>
             <input
@@ -73,20 +92,12 @@ export default function SignIn() {
               }}
               type="password"
               placeholder="Fdfr@134$$"
-              className="focuse:outline-1 focus:outline-lime-600 rounded-md bg-lime-100 px-4 py-3 text-black placeholder:text-lime-600 placeholder:font-mono border-2 border-lime-500"
+              className="focuse:outline-1 focus:outline-[#CCCCCC] text-lg font-mono rounded-md bg-[#F9F9F9] px-4 py-3 text-black placeholder:text-[#333333] placeholder:font-mono border-2 border-[#CCCCCC]"
             ></input>
           </form>
           <button
-            onClick={async () => {
-              const res = await signIn("credentials", {
-                username: username,
-                password: password,
-                redirect: false,
-              });
-              console.log(res);
-              router.push("/");
-            }}
-            className="w-11/12 my-5 bg-lime-600 rounded-md py-2 font-mono font-semibold text-lg text-white active:text-lime-600 active:bg-white"
+            onClick={handlesubmit}
+            className="w-full my-5 bg-[#E94560] rounded-md py-2 font-mono font-semibold text-lg text-white active:text-[#333333] active:bg-white"
           >
             Submit
           </button>
