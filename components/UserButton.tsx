@@ -51,17 +51,17 @@ const UserButton = () => {
 
       {isOpen && (
         <div className="flex flex-col gap-y-3 absolute z-30 -translate-x-full translate-y-[70%] bg-slate-800 p-6 rounded-md">
-          <div className="flex flex-row justify-start gap-x-3 items-center">
+          <div className="flex flex-row justify-start gap-x-3 items-center w-max">
             <img
               src={session?.user?.image || ""}
               onError={handleImageError}
               className="size-10 rounded-full"
             />
-            <p className="text-lg font-semibold text-white ">
+            <p className="text-xl font-semibold text-white ">
               {session?.user?.name}
             </p>
           </div>
-          <p className="text-lg font-semibold text-white">
+          <p className="text-lg font-medium text-white">
             {session?.user?.email}
           </p>
           <button
