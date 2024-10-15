@@ -2,27 +2,28 @@ import React from "react";
 
 interface CreateOrgProps {
   close: () => void;
+  next: () => void;
 }
 
-export default function CreateOrg({ close }: CreateOrgProps) {
+export default function CreateOrg({ close, next }: CreateOrgProps) {
   return (
-    <div className="fixed inset-0 h-screen w-screen flex flex-col gap-y-6 justify-center items-center bg-black bg-opacity-50">
-      <svg
-        onClick={close}
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth="1.5"
-        stroke="white"
-        className="size-12 cursor-pointer"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-        />
-      </svg>
-      <div className="w-[400px] h-max bg-white rounded-lg shadow-lg p-4">
+    <div className="fixed inset-0 h-screen w-screen flex justify-center items-center bg-black bg-opacity-50">
+      <div className="relative w-[400px] h-max bg-white rounded-lg shadow-lg p-7">
+        <svg
+          onClick={close}
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="3"
+          stroke="gray"
+          className="size-6 cursor-pointer absolute top-3 right-3"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M6 18 18 6M6 6l12 12"
+          />
+        </svg>
         <div className="flex flex-col">
           <p className="text-center text-3xl font-semibold mb-6">
             Create Organization
@@ -59,7 +60,10 @@ export default function CreateOrg({ close }: CreateOrgProps) {
             />
           </form>
           <div className="flex justify-end">
-            <button className="bg-blue-500 text-white text-lg py-1 px-4 font-semibold rounded-lg mt-3 w-max">
+            <button
+              onClick={next}
+              className="bg-blue-500 text-white text-lg py-1 px-4 font-medium rounded-lg mt-3 w-max"
+            >
               Create Organization
             </button>
           </div>
