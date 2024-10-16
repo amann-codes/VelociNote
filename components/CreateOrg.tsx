@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 interface CreateOrgProps {
   close: () => void;
@@ -6,6 +6,16 @@ interface CreateOrgProps {
 }
 
 export default function CreateOrg({ close, next }: CreateOrgProps) {
+  const [name, setName] = useState("");
+  const handlesubmit = async () => {
+    const res = await fetch("/api/organization", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name,
+      }),
+    });
+  };
   return (
     <div className="fixed inset-0 h-screen w-screen flex justify-center items-center bg-black bg-opacity-50">
       <div className="relative w-[400px] h-max bg-white rounded-lg shadow-lg p-7">
@@ -55,13 +65,14 @@ export default function CreateOrg({ close, next }: CreateOrgProps) {
               Organization Name
             </label>
             <input
+              onChange={(e) => setName(e.target.value)}
               type="text"
               className="border-[1px] focus:outline-none border-gray-700 rounded-md p-2"
             />
           </form>
           <div className="flex justify-end">
             <button
-              onClick={next}
+              onClick={handlesubmit}
               className="bg-blue-500 text-white text-lg py-1 px-4 font-medium rounded-lg mt-3 w-max"
             >
               Create Organization
