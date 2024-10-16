@@ -46,7 +46,7 @@ export const authOptions: NextAuthOptions = {
         ) {
           console.log("user found with correct credentials");
           return {
-            id: existingUser.id.toString(),
+            id: existingUser.id,
             email: existingUser.email,
             name: existingUser.name,
           };
@@ -67,14 +67,16 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     jwt: async ({ user, token }: any) => {
       if (user) {
-        token.uid = user.id;
+        token.userId = user.id || token.sub; 
       }
+      console.log("JWT Token:", token);
       return token;
     },
     session: ({ session, token, user }: any) => {
       if (session.user) {
-        session.user.id = token.uid;
+        session.user.id = token.userId;
       }
+      console.log("aman",session)
       return session;
     },
   },
