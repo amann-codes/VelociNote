@@ -39,7 +39,18 @@ export const authOptions: NextAuthOptions = {
             name: true,
           },
         });
+        const orgs = await prisma.organization.findMany({
+          where:{
+            creatorId:existingUser?.id
+          },
+          select:{
+            id:true
+          }
+        })
+        console.log("orgs",orgs);
+        const orgIds = orgs.map(org=>org.id);
         if (
+          orgs&&
           existingUser &&
           existingUser.password &&
           (await bcrypt.compare(credentials.password, existingUser.password))
@@ -47,6 +58,7 @@ export const authOptions: NextAuthOptions = {
           console.log("user found with correct credentials");
           return {
             id: existingUser.id,
+            organizationId:orgIds,
             email: existingUser.email,
             name: existingUser.name,
           };
@@ -68,6 +80,7 @@ export const authOptions: NextAuthOptions = {
     jwt: async ({ user, token }: any) => {
       if (user) {
         token.userId = user.id || token.sub; 
+        token.orgIds = user.orgIds
       }
       console.log("JWT Token:", token);
       return token;
@@ -75,6 +88,7 @@ export const authOptions: NextAuthOptions = {
     session: ({ session, token, user }: any) => {
       if (session.user) {
         session.user.id = token.userId;
+        session.user.orgIds = token.orgIds;
       }
       console.log("aman",session)
       return session;
