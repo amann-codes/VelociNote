@@ -13,7 +13,7 @@ export default function AddMembers({ close }: AddMemebersProps) {
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
-          stroke-width="3"
+          strokeWidth="3"
           stroke="gray"
           className="size-6 cursor-pointer absolute top-3 right-3"
         >
@@ -34,7 +34,7 @@ export default function AddMembers({ close }: AddMemebersProps) {
             <textarea className="focus:outline-none resize-none p-3 rounded-md border-[1px] border-gray-300 h-[100px] text-sm" />
           </form>
           <div className="flex justify-end">
-            <button className="bg-blue-500 text-white text-lg py-1 px-4 font-medium rounded-lg mt-3 w-max">
+            <button onClick={close} className="bg-blue-500 text-white text-lg py-1 px-4 font-medium rounded-lg mt-3 w-max">
               Send Invitations
             </button>
           </div>

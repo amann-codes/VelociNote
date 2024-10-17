@@ -14,6 +14,7 @@ const UserButton = () => {
       .substring(0, 2)
       .toUpperCase();
   };
+  const image = session?.user?.image;
 
   const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
     const name = session?.user?.name;
@@ -43,7 +44,8 @@ const UserButton = () => {
       ) : (
         <img
           onClick={() => setIsOpen((prev) => !prev)}
-          src={session?.user?.image || ""}
+          //@ts-ignore
+          src={image}
           onError={handleImageError}
           className="cursor-pointer size-10 rounded-full"
         />
@@ -53,7 +55,8 @@ const UserButton = () => {
         <div className="flex flex-col gap-y-3 absolute z-30 -translate-x-full translate-y-[70%] bg-slate-800 p-6 rounded-md">
           <div className="flex flex-row justify-start gap-x-3 items-center w-max">
             <img
-              src={session?.user?.image || ""}
+              //@ts-ignore
+              src={image}
               onError={handleImageError}
               className="size-10 rounded-full"
             />
