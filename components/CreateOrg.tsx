@@ -15,6 +15,7 @@ export default function CreateOrg({ close, next }: CreateOrgProps) {
         name,
       }),
     });
+    console.log(res);
   };
   return (
     <div className="fixed inset-0 h-screen w-screen flex justify-center items-center bg-black bg-opacity-50">
@@ -24,7 +25,7 @@ export default function CreateOrg({ close, next }: CreateOrgProps) {
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
-          stroke-width="3"
+          strokeWidth="3"
           stroke="gray"
           className="size-6 cursor-pointer absolute top-3 right-3"
         >
@@ -72,7 +73,9 @@ export default function CreateOrg({ close, next }: CreateOrgProps) {
           </form>
           <div className="flex justify-end">
             <button
-              onClick={handlesubmit}
+              onClick={() => {
+                handlesubmit(), next();
+              }}
               className="bg-blue-500 text-white text-lg py-1 px-4 font-medium rounded-lg mt-3 w-max"
             >
               Create Organization
