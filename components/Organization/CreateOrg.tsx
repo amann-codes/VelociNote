@@ -74,7 +74,19 @@ export default function CreateOrg({ close, next }: CreateOrgProps) {
           <div className="flex justify-end">
             <button
               onClick={() => {
-                handlesubmit(), next();
+                handlesubmit();
+                next();
+                async () => {
+                  {
+                    const res = await fetch("/api/organization", {
+                      method: "GET",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                    });
+                    console.log("fetched")
+                  }
+                };
               }}
               className="bg-blue-500 text-white text-lg py-1 px-4 font-medium rounded-lg mt-3 w-max"
             >

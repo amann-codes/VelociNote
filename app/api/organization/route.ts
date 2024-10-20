@@ -5,7 +5,7 @@ import zod from "zod";
 import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest, res: NextResponse) {
   const orgSchema = zod.object({
-    name: zod.string().max(12),
+    name: zod.string().max(20),
   });
   const session = await getServerSession(authOptions);
 
@@ -22,9 +22,27 @@ export async function POST(req: NextRequest, res: NextResponse) {
     });
     if (create) {
       console.log("org created", create);
+      return Response.json({ org: create });
     }
     return Response.json({ message: "created" });
   } catch (e) {
     console.log(e);
   }
+}
+export async function GET() {
+  const session = await getServerSession(authOptions);
+  //@ts-ignore
+  const userId = await session?.user?.id;
+  const orgs = await prisma.organization.findMany({
+    where: {
+      creatorId: userId,
+    },
+    select: {
+      id: true,
+      name: true,
+    },
+  });
+  return Response.json({
+    orgs,
+  });
 }

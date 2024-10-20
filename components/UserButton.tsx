@@ -14,13 +14,19 @@ const UserButton = () => {
       .substring(0, 2)
       .toUpperCase();
   };
-  const image = session?.user?.image;
+  let image = session?.user?.image;
 
   const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
     const name = session?.user?.name;
-    event.currentTarget.src = `https://craftypixels.com/placeholder-image/200x200/0f6fa3/fff&text=${getInitials(
+    event.currentTarget.src = `https://placehold.jp/85/000000/ffffff/150x150.png?text=${getInitials(
       name || ""
     )}`;
+  };
+  if(image==null){
+    const name = session?.user?.name
+    image=`https://placehold.jp/85/000000/ffffff/150x150.png?text=${getInitials(
+      name || ""
+    )}`
   };
 
   return (
@@ -47,7 +53,7 @@ const UserButton = () => {
           //@ts-ignore
           src={image}
           onError={handleImageError}
-          className="cursor-pointer size-10 rounded-full"
+          className="cursor-pointer size-10 rounded-md"
         />
       )}
 
@@ -58,7 +64,7 @@ const UserButton = () => {
               //@ts-ignore
               src={image}
               onError={handleImageError}
-              className="size-10 rounded-full"
+              className="size-10 rounded-md"
             />
             <p className="text-xl font-semibold text-white ">
               {session?.user?.name}

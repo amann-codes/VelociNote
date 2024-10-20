@@ -91,6 +91,7 @@ export const authOptions: NextAuthOptions = {
         session.user.orgIds = token.orgIds;
       }
       console.log("aman",session)
+      console.log(token.orgIds)
       return session;
     },
   },
