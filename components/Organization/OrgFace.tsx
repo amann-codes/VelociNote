@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Tooltip from "./Tooltip";
-
+import Icon from "../Icon";
 interface Organization {
   id: string;
   name: string;
@@ -19,11 +19,6 @@ export default function OrgFace() {
             "Content-Type": "application/json",
           },
         });
-
-        if (!res.ok) {
-          throw new Error("Failed to fetch organizations");
-        }
-
         const data = await res.json();
         setOrganizations(data.orgs);
       } catch (err) {
@@ -37,27 +32,14 @@ export default function OrgFace() {
   if (error) {
     return <div>Error: {error}</div>;
   }
-  const getInitials = (name: string) => {
-    return name
-      .split(" ")
-      .map((word) => word[0])
-      .join("")
-      .substring(0, 2)
-      .toUpperCase();
-  };
-  const Image =({org}:any) =>{
-    return <div className="bg-gradient-to-br">
-      {getInitials(org.name)}
-    </div>
-  }
   return (
     <div className="flex flex-col gap-3">
-      {organizations.map((org) => (
-        <Tooltip text={org.name}>
-          <div key={org.id}>
-            <Image />
-          </div>
-        </Tooltip>
+      {organizations.map((items, index) => (
+        <div key={index}>
+          <Tooltip text={items.name}>
+            <Icon name={items.name} size={10} font="2xl" />
+          </Tooltip>
+        </div>
       ))}
     </div>
   );
